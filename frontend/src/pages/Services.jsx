@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play } from "lucide-react";
+import VideoCards from '../components/VideoCards';
 
 
 export default function Services() {
@@ -17,7 +18,7 @@ export default function Services() {
       </div>
 
       <div>
-
+        <VideoCards />
       </div>
       
     </section>
