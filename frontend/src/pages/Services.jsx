@@ -17,7 +17,7 @@ export default function Services() {
         </h2>
       </div>
 
-      <div>
+      <div className='mt-3'>
         <VideoCards />
       </div>
       

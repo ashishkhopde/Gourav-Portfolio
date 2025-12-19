@@ -64,7 +64,7 @@ export default function VideoCards() {
                 <X className="w-6 h-6 text-white" />
               </button>
 
-              {/* 🎬 Responsive Full-Screen Video */}
+              {/* Responsive Full-Screen Video */}
               <video
                 key={selectedVideo.id}
                 src={selectedVideo.src}
@@ -72,9 +72,9 @@ export default function VideoCards() {
                 autoPlay
                 className="w-full h-full object-cover rounded-2xl"
               />
-              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent py-3 text-center font-semibold text-white text-lg">
+              {/* <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent py-3 text-center font-semibold text-white text-lg">
                 {selectedVideo.title}
-              </div>
+              </div> */}
             </motion.div>
           </motion.div>
         )}
