@@ -17,7 +17,7 @@ export default function Home() {
     };
 
     const [text] = useTypewriter({
-        words: ['Gourav', 'A Video Editor', 'A Content Creator'],
+        words: ['Sachin', 'A Video Editor', 'A Content Creator'],
         loop: true,
         typeSpeed: 150,
         deleteSpeed: 100,

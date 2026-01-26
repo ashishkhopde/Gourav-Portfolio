@@ -66,7 +66,7 @@ export default function Navbar() {
           onClick={() => handleScrollTo("home")}
           className="text-2xl font-bold text-white tracking-wide cursor-pointer"
         >
-          <span className="text-red-500">G</span>ourav
+          <span className="text-red-500">S</span>achin
         </h1>
 
         {/* Desktop Menu */}
