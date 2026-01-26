@@ -25,6 +25,6 @@ app.use("/api/message", messageRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/video", videoRoute);
 
-app.listen(process.env.PORT, '0.0.0.0',()=>{
+app.listen(`0.0.0.0:${process.env.PORT}`,()=>{
     console.log("listening...")
 });
