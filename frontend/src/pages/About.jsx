@@ -1,5 +1,6 @@
 import React from "react";
 import { Play } from "lucide-react";
+import Console from "../assets/edioterConsole.png"
 
 export default function About() {
     return (
@@ -13,7 +14,7 @@ export default function About() {
                     {/* Glow effect behind image */}
                     <div className="absolute -inset-2 bg-red-500/40 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
                     <img
-                        src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&fit=crop&w=800&q=80"
+                        src={Console}
                         alt="Video Editing Setup"
                         className="relative z-10 rounded-2xl shadow-2xl w-[320px] md:w-[600px] object-cover"
                     />

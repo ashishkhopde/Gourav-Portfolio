@@ -3,7 +3,7 @@ import messageModel from "../models/message.model.js";
 export const getAllMessage = async (req, res) => {
     try {
 
-        const messages = await messageModel.find();
+       const messages = await messageModel.find().sort({ createdAt: -1 });
 
         return res.json({
             status: "Messages fetch successfull",

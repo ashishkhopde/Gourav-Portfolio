@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Play } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Contact() {
+  const [message, setMessage] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/message`, message);
+      console.log(res.data);
+
+      if (res.data.status === "Message sent successfull") {
+        toast.success("✅ Message sent successfully!");
+        setMessage({ name: "", email: "", phone: "", message: "" }); // clear form
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("❌ Failed to send message.");
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -25,13 +52,10 @@ export default function Contact() {
       {/* Form Container */}
       <div className="flex justify-center items-start">
         <div className="w-full max-w-xl bg-gradient-to-br from-[#1a0000]/90 to-black/90 backdrop-blur-md p-8 md:p-12 rounded-2xl border border-red-500/30 shadow-lg shadow-red-900/30 hover:shadow-red-600/50 transition-all duration-500">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Name */}
             <div>
-              <label
-                htmlFor="name"
-                className="block text-gray-200 mb-2 font-semibold"
-              >
+              <label htmlFor="name" className="block text-gray-200 mb-2 font-semibold">
                 Name
               </label>
               <input
@@ -40,15 +64,14 @@ export default function Contact() {
                 placeholder="Your Name"
                 className="w-full px-4 py-3 rounded-xl bg-black/50 border border-red-500/30 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all duration-300 text-white placeholder-gray-400"
                 required
+                value={message.name}
+                onChange={(e) => setMessage({ ...message, name: e.target.value })}
               />
             </div>
 
             {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-gray-200 mb-2 font-semibold"
-              >
+              <label htmlFor="email" className="block text-gray-200 mb-2 font-semibold">
                 Email
               </label>
               <input
@@ -57,32 +80,32 @@ export default function Contact() {
                 placeholder="Your Email"
                 className="w-full px-4 py-3 rounded-xl bg-black/50 border border-red-500/30 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all duration-300 text-white placeholder-gray-400"
                 required
+                value={message.email}
+                onChange={(e) => setMessage({ ...message, email: e.target.value })}
               />
             </div>
 
             {/* Phone */}
             <div>
-              <label
-                htmlFor="phone"
-                className="block text-gray-200 mb-2 font-semibold"
-              >
+              <label htmlFor="phone" className="block text-gray-200 mb-2 font-semibold">
                 Phone No.
               </label>
               <input
-                type="phone"
+                type="tel"
                 id="phone"
                 placeholder="Your Phone Number"
                 className="w-full px-4 py-3 rounded-xl bg-black/50 border border-red-500/30 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all duration-300 text-white placeholder-gray-400"
                 required
+                value={message.phone}
+                onChange={(e) => setMessage({ ...message, phone: e.target.value })}
+                pattern="[0-9]{10}"
+                maxLength="10"
               />
             </div>
 
             {/* Message */}
             <div>
-              <label
-                htmlFor="message"
-                className="block text-gray-200 mb-2 font-semibold"
-              >
+              <label htmlFor="message" className="block text-gray-200 mb-2 font-semibold">
                 Message
               </label>
               <textarea
@@ -91,6 +114,8 @@ export default function Contact() {
                 placeholder="Your Message"
                 className="w-full px-4 py-3 rounded-xl bg-black/50 border border-red-500/30 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all duration-300 text-white placeholder-gray-400 resize-none"
                 required
+                value={message.message}
+                onChange={(e) => setMessage({ ...message, message: e.target.value })}
               ></textarea>
             </div>
 
