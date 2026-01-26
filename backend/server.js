@@ -25,6 +25,9 @@ app.use("/api/message", messageRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/video", videoRoute);
 
-app.listen(`0.0.0.0:${process.env.PORT}`,()=>{
-    console.log("listening...")
+const PORT = process.env.PORT || 3000;
+console.log(PORT);
+// ✅ Ensure the server listens on 0.0.0.0 (not localhost)
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server is running on port ${PORT}`);
 });
