@@ -47,3 +47,17 @@ export const deleteMessage = async (req, res) => {
         console.log("Deleting message err : ", error);
     }
 }
+
+export const getMessageCount = async (req, res) => {
+  try {
+
+    const count = await messageModel.countDocuments();
+    res.status(200).json({ totalMessages: count });
+
+  } catch (err) {
+
+    console.error("Error counting messages:", err);
+    res.status(500).json({ message: "Server error" });
+    
+  }
+};

@@ -4,7 +4,8 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 
 import connectDB from "./config/connectDB.js";
-import messageRoute from "./routes/message.route.js"
+import messageRoute from "./routes/message.route.js";
+import adminRoute from "./routes/admin.route.js"
 
 const app = express();
 
@@ -20,6 +21,7 @@ connectDB();
 app.get("/",()=>console.log("Server is running"));
 
 app.use("/api/message", messageRoute);
+app.use("/api/admin", adminRoute);
 
 app.listen(process.env.PORT, ()=>{
     console.log("listening...")
