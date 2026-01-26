@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addVideo, getAllVideos } from "../controllers/video.controller.js"
+import { addVideo, deleteVideo, getAllVideos, getVideoCount } from "../controllers/video.controller.js"
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -15,5 +15,7 @@ router.post(
     ]),
     addVideo
 );
+router.delete('/:id', deleteVideo);
+router.get('/count', getVideoCount);
 
 export default router;

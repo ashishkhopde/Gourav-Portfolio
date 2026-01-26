@@ -2,17 +2,17 @@ import videoModel from "../models/video.model.js"
 import { uploadOnCloudinary } from "../utils/cloudnary.js";
 
 export const getAllVideos = async (req, res) => {
-    try {
-        const videos = await videoModel.find({});
-        return res.json({ videos });
-    } catch (error) {
-        console.error("Error counting messages:", err);
-        res.status(500).json({ message: "Server error" });
-    }
+  try {
+    const videos = await videoModel.find({});
+    return res.json({ videos });
+  } catch (error) {
+    console.error("Error counting messages:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 }
 
 export const addVideo = async (req, res) => {
-    try {
+  try {
     const { title } = req.body;
 
     if (!title) {
@@ -54,3 +54,33 @@ export const addVideo = async (req, res) => {
   }
 }
 
+export const deleteVideo = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const message = await videoModel.findByIdAndDelete({ _id: id });
+
+    return res.json({
+      status: "Message delete successfully",
+      message
+    });
+
+  } catch (error) {
+    console.log("Deleting message err : ", error);
+  }
+}
+
+export const getVideoCount = async (req, res) => {
+  try {
+
+    const count = await videoModel.countDocuments();
+    res.status(200).json({ totalVideos: count });
+
+  } catch (err) {
+
+    console.error("Error counting messages:", err);
+    res.status(500).json({ message: "Server error" });
+
+  }
+}

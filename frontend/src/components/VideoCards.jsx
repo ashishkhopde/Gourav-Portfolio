@@ -53,13 +53,13 @@ export default function VideoCards() {
 
   // Loading skeleton component
   const LoadingSkeleton = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-10">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8 md:gap-12 lg:gap-10">
       {[...Array(6)].map((_, index) => (
-        <div key={index} className="bg-gray-800/50 rounded-2xl md:rounded-3xl lg:rounded-2xl overflow-hidden animate-pulse">
+        <div key={index} className="overflow-hidden bg-gray-800/50 rounded-2xl md:rounded-3xl lg:rounded-2xl animate-pulse">
           <div className="aspect-[4/3] bg-gray-700"></div>
-          <div className="p-5 sm:p-6 md:p-12 lg:p-7 space-y-3 md:space-y-5 lg:space-y-3">
-            <div className="h-5 md:h-8 lg:h-5 bg-gray-700 rounded w-3/4"></div>
-            <div className="h-4 md:h-6 lg:h-4 bg-gray-700 rounded w-1/2"></div>
+          <div className="p-5 space-y-3 sm:p-6 md:p-12 lg:p-7 md:space-y-5 lg:space-y-3">
+            <div className="w-3/4 h-5 bg-gray-700 rounded md:h-8 lg:h-5"></div>
+            <div className="w-1/2 h-4 bg-gray-700 rounded md:h-6 lg:h-4"></div>
           </div>
         </div>
       ))}
@@ -67,7 +67,7 @@ export default function VideoCards() {
   );
 
   return (
-    <div className="text-white px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div className="px-4 py-8 text-white sm:px-6 lg:px-8 lg:py-12">
 
       {/* Loading State */}
       {loading && <LoadingSkeleton />}
@@ -77,14 +77,14 @@ export default function VideoCards() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-center py-16"
+          className="py-16 text-center"
         >
-          <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-md mx-auto">
-            <div className="text-red-400 text-lg font-semibold mb-2">Oops! Something went wrong</div>
-            <p className="text-gray-400 mb-4">{error}</p>
+          <div className="max-w-md p-8 mx-auto border bg-red-500/10 border-red-500/30 rounded-2xl">
+            <div className="mb-2 text-lg font-semibold text-red-400">Oops! Something went wrong</div>
+            <p className="mb-4 text-gray-400">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-300"
+              className="px-6 py-2 text-white transition-colors duration-300 bg-red-500 rounded-lg hover:bg-red-600"
             >
               Try Again
             </button>
@@ -97,11 +97,11 @@ export default function VideoCards() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-center py-16"
+          className="py-16 text-center"
         >
-          <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-8 max-w-md mx-auto">
-            <Play className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-            <div className="text-gray-300 text-lg font-semibold mb-2">No Videos Yet</div>
+          <div className="max-w-md p-8 mx-auto border border-gray-700 bg-gray-800/50 rounded-2xl">
+            <Play className="w-16 h-16 mx-auto mb-4 text-gray-500" />
+            <div className="mb-2 text-lg font-semibold text-gray-300">No Videos Yet</div>
             <p className="text-gray-500">Check back soon for new video content!</p>
           </div>
         </motion.div>
@@ -110,7 +110,7 @@ export default function VideoCards() {
       {/* Videos Grid */}
       {!loading && !error && videos.length > 0 && (
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-10"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8 md:gap-12 lg:gap-10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -121,7 +121,7 @@ export default function VideoCards() {
               variants={cardVariants}
               whileHover={{ scale: 1.03, y: -5 }}
               whileTap={{ scale: 0.98 }}
-              className="group cursor-pointer bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-2xl md:rounded-3xl lg:rounded-2xl overflow-hidden shadow-xl hover:shadow-red-500/20 border border-gray-700/50 hover:border-red-500/30 transition-all duration-300"
+              className="overflow-hidden transition-all duration-300 border shadow-xl cursor-pointer group bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-2xl md:rounded-3xl lg:rounded-2xl hover:shadow-red-500/20 border-gray-700/50 hover:border-red-500/30"
               onClick={() => setSelectedVideo(video)}
             >
               <div className="aspect-[4/3] relative overflow-hidden">
@@ -135,33 +135,33 @@ export default function VideoCards() {
                       : video.coverImage
                   }
                   alt={video.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/80 via-transparent to-transparent group-hover:opacity-100">
                   <div className="absolute bottom-4 md:bottom-8 lg:bottom-4 left-4 md:left-8 lg:left-4 right-4 md:right-8 lg:right-4">
-                    <h3 className="text-white font-semibold text-base sm:text-lg md:text-2xl lg:text-lg truncate">
+                    <h3 className="text-base font-semibold text-white truncate sm:text-lg md:text-2xl lg:text-lg">
                       {video.title}
                     </h3>
                   </div>
                 </div>
 
                 {/* Play button */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-red-500/90 backdrop-blur-sm rounded-full p-4 sm:p-5 md:p-8 lg:p-5 transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                    <Play className="w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 lg:w-10 lg:h-10 text-white fill-white" />
+                <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                  <div className="p-4 transition-transform duration-300 transform scale-75 rounded-full bg-red-500/90 backdrop-blur-sm sm:p-5 md:p-8 lg:p-5 group-hover:scale-100">
+                    <Play className="w-8 h-8 text-white sm:w-10 sm:h-10 md:w-16 md:h-16 lg:w-10 lg:h-10 fill-white" />
                   </div>
                 </div>
               </div>
 
               {/* Card content */}
               <div className="p-5 sm:p-6 md:p-12 lg:p-7">
-                <h3 className="text-white font-semibold text-lg sm:text-xl md:text-3xl lg:text-xl mb-2 md:mb-4 lg:mb-2 truncate group-hover:text-red-400 transition-colors duration-300">
+                <h3 className="mb-2 text-lg font-semibold text-white truncate transition-colors duration-300 sm:text-xl md:text-3xl lg:text-xl md:mb-4 lg:mb-2 group-hover:text-red-400">
                   {video.title}
                 </h3>
-                <p className="text-gray-400 text-sm sm:text-base md:text-xl lg:text-base">Click to watch</p>
+                <p className="text-sm text-gray-400 sm:text-base md:text-xl lg:text-base">Click to watch</p>
               </div>
             </motion.div>
           ))}
@@ -173,7 +173,7 @@ export default function VideoCards() {
         {selectedVideo && (
           <motion.div
             key="overlay"
-            className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -181,7 +181,7 @@ export default function VideoCards() {
           >
             <motion.div
               key="modal"
-              className="relative w-full max-w-6xl rounded-2xl overflow-hidden bg-black shadow-2xl"
+              className="relative w-full max-w-6xl overflow-hidden bg-black shadow-2xl rounded-2xl"
               initial={{ scale: 0.8, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -195,15 +195,15 @@ export default function VideoCards() {
                   e.stopPropagation();
                   setSelectedVideo(null);
                 }}
-                className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm p-3 rounded-full hover:bg-red-600 transition-colors z-50 group"
+                className="absolute z-50 p-3 transition-colors rounded-full top-4 right-4 bg-black/80 backdrop-blur-sm hover:bg-red-600 group"
                 aria-label="Close video"
               >
-                <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
+                <X className="w-6 h-6 text-white transition-transform duration-300 group-hover:rotate-90" />
               </button>
 
               {/* Video Title */}
-              <div className="absolute top-4 left-4 z-50">
-                <h3 className="text-white font-semibold text-lg sm:text-xl bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg">
+              <div className="absolute z-50 top-4 left-4">
+                <h3 className="px-4 py-2 text-lg font-semibold text-white rounded-lg sm:text-xl bg-black/80 backdrop-blur-sm">
                   {selectedVideo.title}
                 </h3>
               </div>
