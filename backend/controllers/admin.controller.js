@@ -32,8 +32,7 @@ export const adminLogin = (req, res) => {
             .cookie("token", token, {
                 withCredentials: true,
                 httpOnly: true,        // Prevent JS access (XSS protection)
-                secure: true,          // Send only over HTTPS
-                sameSite: "strict",    // Prevent CSRF
+                secure: true,          // Send only over HTT
                 maxAge: 24 * 60 * 60 * 1000 // 1 day
             })
             .status(200)
