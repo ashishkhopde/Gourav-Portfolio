@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Loader2 } from "lucide-react";
-import axios from "axios";
+import api from "../config/api";
 
 export default function VideoCards() {
   const [videos, setVideos] = useState([]);
@@ -15,9 +15,7 @@ export default function VideoCards() {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/video`, {
-          withCredentials: true,
-        });
+        const res = await api.get("/video");
         setVideos(res.data.videos || []);
       } catch (error) {
         console.error("Error fetching videos:", error);
@@ -129,16 +127,16 @@ export default function VideoCards() {
                   src={
                     video.coverImage?.includes("/upload/")
                       ? video.coverImage.replace(
-                          "/upload/",
-                          "/upload/f_auto,q_auto,w_800/"
-                        )
+                        "/upload/",
+                        "/upload/f_auto,q_auto,w_800/"
+                      )
                       : video.coverImage
                   }
                   alt={video.title}
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
-                
+
                 {/* Overlay */}
                 <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/80 via-transparent to-transparent group-hover:opacity-100">
                   <div className="absolute bottom-4 md:bottom-8 lg:bottom-4 left-4 md:left-8 lg:left-4 right-4 md:right-8 lg:right-4">

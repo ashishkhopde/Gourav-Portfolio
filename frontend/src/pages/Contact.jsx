@@ -1,8 +1,51 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Play, Send, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
-import axios from "axios";
+import api from "../config/api";
 import toast from "react-hot-toast";
+
+const InputField = ({ icon: Icon, label, type, id, placeholder, value, onChange, error, ...props }) => (
+  <div className="space-y-2 md:space-y-4 lg:space-y-2">
+    <label htmlFor={id} className="block text-gray-200 text-sm sm:text-base md:text-xl lg:text-base font-semibold flex items-center gap-2 md:gap-4 lg:gap-2">
+      <Icon className="w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4 text-red-500" />
+      {label}
+    </label>
+    <div className="relative">
+      {type === "textarea" ? (
+        <textarea
+          id={id}
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`w-full px-4 md:px-8 lg:px-4 py-3 md:py-6 lg:py-3 rounded-xl md:rounded-2xl lg:rounded-xl bg-[#111] border transition-all duration-300 text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-red-500 text-base md:text-xl lg:text-base ${error
+            ? "border-red-500 focus:border-red-500"
+            : "border-red-500 md:border-red-500/50 focus:border-red-500"
+            }`}
+          {...props}
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`w-full px-4 md:px-8 lg:px-4 py-3 md:py-6 lg:py-3 rounded-xl md:rounded-2xl lg:rounded-xl bg-[#111] border transition-all duration-300 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 text-base md:text-xl lg:text-base ${error
+            ? "border-red-500 focus:border-red-500"
+            : "border-red-500 md:border-red-500/50 focus:border-red-500"
+            }`}
+          {...props}
+        />
+      )}
+      {error && (
+        <div className="absolute -bottom-6 md:-bottom-8 lg:-bottom-6 left-0 flex items-center gap-1 md:gap-2 lg:gap-1 text-red-400 text-sm md:text-lg lg:text-sm">
+          <AlertCircle className="w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4" />
+          {error}
+        </div>
+      )}
+    </div>
+  </div>
+);
 
 export default function Contact() {
   const [message, setMessage] = useState({
@@ -37,8 +80,6 @@ export default function Contact() {
 
     if (!message.message.trim()) {
       newErrors.message = "Message is required";
-    } else if (message.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
     }
 
     setErrors(newErrors);
@@ -47,17 +88,17 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       toast.error("Please fix the errors in the form");
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/message`, message);
-      
+      const res = await api.post("/message", message);
+
       if (res.data.status === "Message sent successfull") {
         toast.success("✅ Message sent successfully! I'll get back to you soon.");
         setMessage({ name: "", email: "", phone: "", message: "" });
@@ -101,51 +142,6 @@ export default function Contact() {
     }
   };
 
-  const InputField = ({ icon: Icon, label, type, id, placeholder, value, onChange, error, ...props }) => (
-    <motion.div variants={itemVariants} className="space-y-2 md:space-y-4 lg:space-y-2">
-      <label htmlFor={id} className="block text-gray-200 text-sm sm:text-base md:text-xl lg:text-base font-semibold flex items-center gap-2 md:gap-4 lg:gap-2">
-        <Icon className="w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4 text-red-400" />
-        {label}
-      </label>
-      <div className="relative">
-        {type === "textarea" ? (
-          <textarea
-            id={id}
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 md:px-8 lg:px-4 py-3 md:py-6 lg:py-3 rounded-xl md:rounded-2xl lg:rounded-xl bg-black/50 border transition-all duration-300 text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-red-500 text-base md:text-xl lg:text-base ${
-              error 
-                ? "border-red-500 focus:border-red-500" 
-                : "border-red-500/30 focus:border-red-500"
-            }`}
-            {...props}
-          />
-        ) : (
-          <input
-            type={type}
-            id={id}
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 md:px-8 lg:px-4 py-3 md:py-6 lg:py-3 rounded-xl md:rounded-2xl lg:rounded-xl bg-black/50 border transition-all duration-300 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 text-base md:text-xl lg:text-base ${
-              error 
-                ? "border-red-500 focus:border-red-500" 
-                : "border-red-500/30 focus:border-red-500"
-            }`}
-            {...props}
-          />
-        )}
-        {error && (
-          <div className="absolute -bottom-6 md:-bottom-8 lg:-bottom-6 left-0 flex items-center gap-1 md:gap-2 lg:gap-1 text-red-400 text-sm md:text-lg lg:text-sm">
-            <AlertCircle className="w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4" />
-            {error}
-          </div>
-        )}
-      </div>
-    </motion.div>
-  );
-
   return (
     <section
       id="contact"
@@ -183,14 +179,14 @@ export default function Contact() {
                   <Mail className="w-6 h-6 md:w-10 md:h-10 lg:w-6 lg:h-6 text-red-400" />
                   <div>
                     <div className="text-sm md:text-lg lg:text-sm text-gray-400">Email</div>
-                    <div className="text-white font-medium text-base md:text-xl lg:text-base">sachin@example.com</div>
+                    <div className="text-white font-medium text-base md:text-xl lg:text-base">x.sachin.yt00@gmail.com</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 md:gap-6 lg:gap-4 p-4 md:p-8 lg:p-4 bg-white/5 rounded-xl md:rounded-2xl lg:rounded-xl backdrop-blur-sm border border-white/10">
                   <Phone className="w-6 h-6 md:w-10 md:h-10 lg:w-6 lg:h-6 text-red-400" />
                   <div>
                     <div className="text-sm md:text-lg lg:text-sm text-gray-400">Phone</div>
-                    <div className="text-white font-medium text-base md:text-xl lg:text-base">+1 (555) 123-4567</div>
+                    <div className="text-white font-medium text-base md:text-xl lg:text-base">+91 74709 87006</div>
                   </div>
                 </div>
               </div>
