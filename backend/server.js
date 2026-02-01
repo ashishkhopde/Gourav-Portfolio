@@ -11,8 +11,8 @@ import videoRoute from "./routes/video.route.js"
 const app = express();
 
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL, "http://localhost:5174", "http://localhost:5173", "http://localhost:3000", "http://localhost:4173"],
-    credentials: true
+  origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL, "https://sachin-editor-portfolio.vercel.app", "https://sachin-portfolio-admin.vercel.app", "http://localhost:5174", "http://localhost:5173", "http://localhost:3000", "http://localhost:4173"],
+  credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
@@ -20,7 +20,7 @@ app.use(cookieParser());
 connectDB();
 
 app.get("/", (req, res) => {
-    res.send("Server is running");
+  res.send("Server is running");
 });
 
 app.use("/api/message", messageRoute);
