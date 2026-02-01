@@ -49,10 +49,10 @@ export default function About() {
     return (
         <section
             id="about"
-            className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 md:px-12 lg:px-8 xl:px-16 text-white py-16 md:py-24 lg:py-16"
+            className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 md:px-12 lg:px-8 xl:px-16 text-white pt-32 pb-16 md:py-24 lg:py-16"
         >
             {/* Left Image */}
-            <motion.div 
+            <motion.div
                 className="flex-1 flex justify-center items-center mb-12 md:mb-20 lg:mb-0 lg:pr-8"
                 variants={imageVariants}
                 initial="hidden"
@@ -63,12 +63,12 @@ export default function About() {
                     {/* Animated background elements */}
                     <div className="absolute -inset-4 md:-inset-8 lg:-inset-4 bg-gradient-to-br from-red-500/30 to-orange-500/30 rounded-3xl md:rounded-[3rem] lg:rounded-3xl blur-2xl md:blur-3xl lg:blur-2xl group-hover:blur-3xl md:group-hover:blur-[4rem] lg:group-hover:blur-3xl transition-all duration-700"></div>
                     <div className="absolute -inset-2 md:-inset-4 lg:-inset-2 bg-red-500/20 rounded-2xl md:rounded-[2rem] lg:rounded-2xl blur-xl md:blur-2xl lg:blur-xl group-hover:blur-2xl md:group-hover:blur-3xl lg:group-hover:blur-2xl transition-all duration-500"></div>
-                    
+
                     {/* Main image */}
                     <img
                         src={Console}
                         alt="Professional video editing console and workspace setup"
-                        className="relative z-10 rounded-2xl md:rounded-[2rem] lg:rounded-2xl shadow-2xl w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="relative z-10 rounded-2xl md:rounded-[2rem] lg:rounded-2xl drop-shadow-2xl w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                     />
 
@@ -76,7 +76,7 @@ export default function About() {
             </motion.div>
 
             {/* Right Content */}
-            <motion.div 
+            <motion.div
                 className="flex-1 text-center lg:text-left space-y-6 md:space-y-10 lg:space-y-8 max-w-2xl lg:max-w-none mt-4"
                 variants={containerVariants}
                 initial="hidden"
@@ -103,7 +103,7 @@ export default function About() {
 
                 <motion.div variants={itemVariants}>
                     <p className="text-gray-400 text-sm sm:text-base md:text-xl lg:text-lg leading-relaxed">
-                        With over 3 years of experience in the industry, I've worked with diverse clients ranging from 
+                        With over 3 years of experience in the industry, I've worked with diverse clients ranging from
                         small businesses to content creators, helping them bring their vision to life through the power of video.
                     </p>
                 </motion.div>
