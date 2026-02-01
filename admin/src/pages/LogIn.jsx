@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { useNavigate } from "react-router-dom";
 
 export default function LogIn() {
@@ -16,10 +16,7 @@ export default function LogIn() {
 
   const checkExistingAuth = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/admin/check-auth`,
-        { withCredentials: true }
-      );
+      const response = await api.get("/admin/check-auth");
 
       if (response.data.authenticated) {
         console.log("User already logged in, redirecting to dashboard");
@@ -49,31 +46,25 @@ export default function LogIn() {
 
     try {
       console.log("Attempting login to:", `${import.meta.env.VITE_BASE_URL}/admin/login`);
-      
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/admin/login`,
+
+      const res = await api.post(
+        "/admin/login",
         { username, password },
-        { 
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 10000 // 10 second timeout
-        }
+        { timeout: 10000 }
       );
 
       console.log("Login response:", res.data);
 
       if (res.data.success) {
         console.log("Login successful, verifying authentication...");
-        
+
         // Verify authentication before redirecting
         try {
-          const authCheck = await axios.get(
-            `${import.meta.env.VITE_BASE_URL}/admin/check-auth`,
-            { withCredentials: true, timeout: 5000 }
+          const authCheck = await api.get(
+            "/admin/check-auth",
+            { timeout: 5000 }
           );
-          
+
           if (authCheck.data.authenticated) {
             console.log("Authentication verified, redirecting to dashboard");
             navigate("/", { replace: true });
@@ -84,7 +75,7 @@ export default function LogIn() {
           console.error("Auth verification failed:", authError);
           setError("Login successful but session verification failed. Please try again.");
         }
-        
+
       } else {
         setError(res.data.message || "Login failed");
       }

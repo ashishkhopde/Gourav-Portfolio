@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { Trash2 } from "lucide-react";
 
 export default function Messages() {
@@ -10,9 +10,7 @@ export default function Messages() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/message`, {
-          withCredentials: true,
-        });
+        const res = await api.get("/message");
         setMessages(res.data.messages);
       } catch (err) {
         console.error("Error fetching messages:", err);
@@ -29,9 +27,7 @@ export default function Messages() {
     if (!window.confirm("Are you sure you want to delete this message?")) return;
 
     try {
-      await axios.delete(`${import.meta.env.VITE_BASE_URL}/message/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(`/message/${id}`);
       setMessages((prev) => prev.filter((msg) => msg._id !== id));
     } catch (err) {
       console.error("Error deleting message:", err);

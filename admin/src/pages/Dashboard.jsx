@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
+import api from '../config/api'
 
 export default function Dashboard() {
   const [messageCount, setMessageCount] = useState(0);
   const [videoCount, setVideoCount] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     try {
       const getcount = async () => {
-        const message = await axios.get(`${import.meta.env.VITE_BASE_URL}/message/count`, {
-          withCredentials: true,
-        });
+        const message = await api.get("/message/count");
         setMessageCount(message.data.totalMessages);
 
-        const videos = await axios.get(`${import.meta.env.VITE_BASE_URL}/video/count`, {
-          withCredentials: true,
-        });
+        const videos = await api.get("/video/count");
         setVideoCount(videos.data.totalVideos);
       }
 

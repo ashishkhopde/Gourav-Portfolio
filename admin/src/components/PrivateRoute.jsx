@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../config/api";
 
 export default function PrivateRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -14,17 +14,16 @@ export default function PrivateRoute({ children }) {
   const checkAuthentication = async () => {
     try {
       console.log("PrivateRoute: Checking authentication...");
-      
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/admin/check-auth`,
-        { 
-          withCredentials: true,
+
+      const response = await api.get(
+        "/admin/check-auth",
+        {
           timeout: 5000 // Add timeout to prevent hanging
         }
       );
 
       console.log("PrivateRoute: Auth check response:", response.data);
-      
+
       if (response.data.authenticated) {
         setIsAuthenticated(true);
         console.log("PrivateRoute: User is authenticated");

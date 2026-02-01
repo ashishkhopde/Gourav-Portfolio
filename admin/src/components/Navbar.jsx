@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../config/api";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,11 +18,7 @@ export default function Navbar() {
   // Logout function
   const handleLogout = async () => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/admin/logout`,
-        {},
-        { withCredentials: true }
-      );
+      await api.post("/admin/logout");
       console.log("Logout successful");
     } catch (error) {
       console.error("Logout error:", error);
@@ -47,17 +43,15 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6 items-center text-gray-200 font-medium">
           <button
             onClick={() => handleNavClick("/message")}
-            className={`hover:text-red-500 transition-all duration-300 ${
-              location.pathname === "/message" ? "text-red-500" : ""
-            }`}
+            className={`hover:text-red-500 transition-all duration-300 ${location.pathname === "/message" ? "text-red-500" : ""
+              }`}
           >
             Messages
           </button>
           <button
             onClick={() => handleNavClick("/video")}
-            className={`hover:text-red-500 transition-all duration-300 ${
-              location.pathname === "/video" ? "text-red-500" : ""
-            }`}
+            className={`hover:text-red-500 transition-all duration-300 ${location.pathname === "/video" ? "text-red-500" : ""
+              }`}
           >
             Videos
           </button>
@@ -85,25 +79,22 @@ export default function Navbar() {
         <div className="md:hidden bg-black/90 text-gray-300 flex flex-col items-center space-y-4 py-6">
           <button
             onClick={() => handleNavClick("/")}
-            className={`hover:text-red-500 ${
-              location.pathname === "/" ? "text-red-500" : ""
-            }`}
+            className={`hover:text-red-500 ${location.pathname === "/" ? "text-red-500" : ""
+              }`}
           >
             Home
           </button>
           <button
             onClick={() => handleNavClick("/message")}
-            className={`hover:text-red-500 ${
-              location.pathname === "/message" ? "text-red-500" : ""
-            }`}
+            className={`hover:text-red-500 ${location.pathname === "/message" ? "text-red-500" : ""
+              }`}
           >
             Messages
           </button>
           <button
             onClick={() => handleNavClick("/video")}
-            className={`hover:text-red-500 ${
-              location.pathname === "/video" ? "text-red-500" : ""
-            }`}
+            className={`hover:text-red-500 ${location.pathname === "/video" ? "text-red-500" : ""
+              }`}
           >
             Videos
           </button>

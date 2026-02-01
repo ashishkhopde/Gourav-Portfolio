@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Plus, Upload, Loader2, Trash2 } from "lucide-react";
-import axios from "axios";
+import api from "../config/api";
 
 export default function Video() {
   const [videos, setVideos] = useState([]);
@@ -20,9 +20,7 @@ export default function Video() {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/video`, {
-        withCredentials: true,
-      });
+      const res = await api.get("/video");
       setVideos(res.data.videos || []);
     } catch (error) {
       console.error("Error fetching videos:", error);
@@ -50,12 +48,11 @@ export default function Video() {
 
     try {
       setUploading(true);
-      const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/video`,
+      const res = await api.post(
+        "/video",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true,
         }
       );
 
@@ -83,9 +80,7 @@ export default function Video() {
 
     try {
       setDeleting(true);
-      const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/video/${id}`, {
-        withCredentials: true,
-      });
+      const res = await api.delete(`/video/${id}`);
 
       if (res.data.success) {
         setVideos((prev) => prev.filter((v) => v._id !== id));
