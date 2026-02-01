@@ -2,22 +2,22 @@ import { Schema, model } from "mongoose";
 
 const messageSchema = new Schema({
     name: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
     email: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
-    phone : {
-        type : Number,
-        required : true,
-        maxlength : 10
+    phone: {
+        type: Number,
+        required: true,
+        maxlength: 10
     },
-    message : {
-        type : String,
-        required : true
+    message: {
+        type: String,
+        required: true
     }
-});
+}, { timestamps: true });
 
 export default model("message", messageSchema);

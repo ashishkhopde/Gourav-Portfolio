@@ -11,7 +11,7 @@ import videoRoute from "./routes/video.route.js"
 const app = express();
 
 app.use(cors({
-    origin: ["http://localhost:5174", "http://localhost:5173"],
+    origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL, "http://localhost:5174", "http://localhost:5173", "http://localhost:3000", "http://localhost:4173"],
     credentials: true
 }));
 app.use(express.json());
@@ -19,7 +19,9 @@ app.use(cookieParser());
 
 connectDB();
 
-app.get("/",()=>console.log("Server is running"));
+app.get("/", (req, res) => {
+    res.send("Server is running");
+});
 
 app.use("/api/message", messageRoute);
 app.use("/api/admin", adminRoute);

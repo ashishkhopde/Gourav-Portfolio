@@ -13,6 +13,6 @@ const videoSchema = new Schema({
         type: String,
         required: true
     }
-});
+}, { timestamps: true });
 
 export default model("Video", videoSchema);

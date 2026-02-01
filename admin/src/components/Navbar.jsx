@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,9 +16,20 @@ export default function Navbar() {
   };
 
   // Logout function
-  const handleLogout = () => {
-    Cookies.remove("token"); // remove JWT cookie
-    navigate("/login");       // redirect to login page
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/admin/logout`,
+        {},
+        { withCredentials: true }
+      );
+      console.log("Logout successful");
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      // Always redirect to login, even if logout API fails
+      navigate("/login", { replace: true });
+    }
   };
 
   return (
@@ -95,12 +106,6 @@ export default function Navbar() {
             }`}
           >
             Videos
-          </button>
-          <button
-            onClick={() => handleNavClick("/contact")}
-            className="hover:text-red-500"
-          >
-            Contact
           </button>
 
           {/* Mobile Logout */}
