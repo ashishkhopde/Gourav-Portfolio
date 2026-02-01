@@ -154,10 +154,6 @@ export default function LogIn() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-gray-400 text-sm">
-          <p>Backend URL: {import.meta.env.VITE_BASE_URL}</p>
-          <p className="mt-2">Credentials: Gourav / password</p>
-        </div>
       </div>
     </div>
   );
