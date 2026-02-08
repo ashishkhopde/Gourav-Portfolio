@@ -233,6 +233,8 @@ export default function VideoCards({ category = "All" }) {
                   key={selectedVideo._id}
                   src={selectedVideo.videoLink}
                   controls
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
                   autoPlay
                   className="max-w-full max-h-[85vh] rounded-2xl"
                   onError={(e) => {
