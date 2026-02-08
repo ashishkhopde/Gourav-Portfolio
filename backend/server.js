@@ -5,8 +5,10 @@ import cookieParser from "cookie-parser";
 
 import connectDB from "./config/connectDB.js";
 import messageRoute from "./routes/message.route.js";
-import adminRoute from "./routes/admin.route.js"
-import videoRoute from "./routes/video.route.js"
+import adminRoute from "./routes/admin.route.js";
+import videoRoute from "./routes/video.route.js";
+import categoryRoute from "./routes/category.route.js";
+import servicesRoute from "./routes/services.route.js";
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.get("/", (req, res) => {
 app.use("/api/message", messageRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/video", videoRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/services", servicesRoute);
 
 const PORT = process.env.PORT || 3000;
 console.log(PORT);
