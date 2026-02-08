@@ -9,13 +9,11 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Navigation function
   const handleNavClick = (path) => {
     setIsOpen(false);
     if (location.pathname !== path) navigate(path);
   };
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await api.post("/admin/logout");
@@ -23,24 +21,23 @@ export default function Navbar() {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      // Always redirect to login, even if logout API fails
       navigate("/login", { replace: true });
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-lg shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 z-50 w-full shadow-md bg-black/70 backdrop-blur-lg">
+      <div className="flex items-center justify-between px-6 py-4 mx-auto max-w-7xl md:px-10">
         {/* Logo */}
         <h1
           onClick={() => handleNavClick("/")}
-          className="text-2xl md:text-3xl font-bold text-red-500 cursor-pointer"
+          className="text-2xl font-bold text-red-500 cursor-pointer md:text-3xl"
         >
           🎥 Sachin<span className="text-white">Editz</span>
         </h1>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex space-x-6 items-center text-gray-200 font-medium">
+        <div className="items-center hidden space-x-6 font-medium text-gray-200 md:flex">
           <button
             onClick={() => handleNavClick("/message")}
             className={`hover:text-red-500 transition-all duration-300 ${location.pathname === "/message" ? "text-red-500" : ""
@@ -48,6 +45,7 @@ export default function Navbar() {
           >
             Messages
           </button>
+
           <button
             onClick={() => handleNavClick("/video")}
             className={`hover:text-red-500 transition-all duration-300 ${location.pathname === "/video" ? "text-red-500" : ""
@@ -56,10 +54,17 @@ export default function Navbar() {
             Videos
           </button>
 
-          {/* Logout Button */}
+          <button
+            onClick={() => handleNavClick("/infos")}
+            className={`hover:text-red-500 transition-all duration-300 ${location.pathname === "/infos" ? "text-red-500" : ""
+              }`}
+          >
+            Infos
+          </button>
+
           <button
             onClick={handleLogout}
-            className="ml-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300"
+            className="px-4 py-2 ml-4 font-semibold text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600"
           >
             Logout
           </button>
@@ -68,7 +73,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-white text-2xl focus:outline-none"
+          className="text-2xl text-white md:hidden focus:outline-none"
         >
           {isOpen ? "✖" : "☰"}
         </button>
@@ -76,33 +81,38 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-black/90 text-gray-300 flex flex-col items-center space-y-4 py-6">
+        <div className="flex flex-col items-center py-6 space-y-4 text-gray-300 md:hidden bg-black/90">
           <button
             onClick={() => handleNavClick("/")}
-            className={`hover:text-red-500 ${location.pathname === "/" ? "text-red-500" : ""
-              }`}
+            className={`hover:text-red-500 ${location.pathname === "/" ? "text-red-500" : ""}`}
           >
             Home
           </button>
+
           <button
             onClick={() => handleNavClick("/message")}
-            className={`hover:text-red-500 ${location.pathname === "/message" ? "text-red-500" : ""
-              }`}
+            className={`hover:text-red-500 ${location.pathname === "/message" ? "text-red-500" : ""}`}
           >
             Messages
           </button>
+
           <button
             onClick={() => handleNavClick("/video")}
-            className={`hover:text-red-500 ${location.pathname === "/video" ? "text-red-500" : ""
-              }`}
+            className={`hover:text-red-500 ${location.pathname === "/video" ? "text-red-500" : ""}`}
           >
             Videos
           </button>
 
-          {/* Mobile Logout */}
+          <button
+            onClick={() => handleNavClick("/infos")}
+            className={`hover:text-red-500 ${location.pathname === "/infos" ? "text-red-500" : ""}`}
+          >
+            Infos
+          </button>
+
           <button
             onClick={handleLogout}
-            className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300"
+            className="px-4 py-2 mt-4 font-semibold text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600"
           >
             Logout
           </button>

@@ -6,6 +6,7 @@ import Video from './pages/Video';
 import Navbar from './components/Navbar';
 import LogIn from './pages/LogIn';
 import PrivateRoute from './components/PrivateRoute';
+import Infos from './pages/Infos';
 
 function AppWrapper() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function AppWrapper() {
         <Route path='/' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path='/message' element={<PrivateRoute><Messages /></PrivateRoute>} />
         <Route path='/video' element={<PrivateRoute><Video /></PrivateRoute>} />
+        <Route path='/infos' element={<PrivateRoute><Infos /></PrivateRoute>} />
         <Route path='/login' element={<LogIn />} />
       </Routes>
     </>
