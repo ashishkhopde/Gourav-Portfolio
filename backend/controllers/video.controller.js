@@ -13,10 +13,10 @@ export const getAllVideos = async (req, res) => {
 
 export const addVideo = async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, category } = req.body;
 
-    if (!title) {
-      return res.status(400).json({ success: false, message: "Title is required" });
+    if (!title || !category) {
+      return res.status(400).json({ success: false, message: "Title and category are required" });
     }
 
     // Check if files exist
@@ -35,6 +35,7 @@ export const addVideo = async (req, res) => {
     // Save in MongoDB
     const newVideo = await videoModel.create({
       title,
+      category,
       coverImage: coverUpload.secure_url,
       videoLink: videoUpload.secure_url,
     });

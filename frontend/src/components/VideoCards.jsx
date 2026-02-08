@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Loader2 } from "lucide-react";
 import api from "../config/api";
 
-export default function VideoCards() {
+export default function VideoCards({ category = "All" }) {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -64,6 +64,11 @@ export default function VideoCards() {
     </div>
   );
 
+  const filteredVideos =
+    category && category !== "All"
+      ? videos.filter((video) => video.category === category)
+      : videos;
+
   return (
     <div className="px-4 py-8 text-white sm:px-6 lg:px-8 lg:py-12">
 
@@ -91,7 +96,7 @@ export default function VideoCards() {
       )}
 
       {/* Empty State */}
-      {!loading && !error && videos.length === 0 && (
+      {!loading && !error && filteredVideos.length === 0 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -100,20 +105,24 @@ export default function VideoCards() {
           <div className="max-w-md p-8 mx-auto border border-gray-700 bg-gray-800/50 rounded-2xl">
             <Play className="w-16 h-16 mx-auto mb-4 text-gray-500" />
             <div className="mb-2 text-lg font-semibold text-gray-300">No Videos Yet</div>
-            <p className="text-gray-500">Check back soon for new video content!</p>
+            <p className="text-gray-500">
+              {category && category !== "All"
+                ? `No videos found in ${category}.`
+                : "Check back soon for new video content!"}
+            </p>
           </div>
         </motion.div>
       )}
 
       {/* Videos Grid */}
-      {!loading && !error && videos.length > 0 && (
+      {!loading && !error && filteredVideos.length > 0 && (
         <motion.div
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8 md:gap-12 lg:gap-10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {videos.map((video) => (
+          {filteredVideos.map((video) => (
             <motion.div
               key={video._id}
               variants={cardVariants}
@@ -159,7 +168,14 @@ export default function VideoCards() {
                 <h3 className="mb-2 text-lg font-semibold text-white truncate transition-colors duration-300 sm:text-xl md:text-3xl lg:text-xl md:mb-4 lg:mb-2 group-hover:text-red-400">
                   {video.title}
                 </h3>
-                <p className="text-sm text-gray-400 sm:text-base md:text-xl lg:text-base">Click to watch</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-400 sm:text-base md:text-xl lg:text-base">Click to watch</p>
+                  {video.category && (
+                    <span className="px-3 py-1 text-xs font-semibold text-red-400 border border-red-500/30 rounded-full bg-red-500/10 sm:text-sm md:text-base lg:text-sm md:px-4 md:py-2 lg:px-3 lg:py-1">
+                      {video.category}
+                    </span>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
@@ -200,10 +216,15 @@ export default function VideoCards() {
               </button>
 
               {/* Video Title */}
-              <div className="absolute z-50 top-4 left-4">
+              <div className="absolute z-50 flex flex-col gap-2 top-4 left-4 sm:flex-row sm:items-center">
                 <h3 className="px-4 py-2 text-lg font-semibold text-white rounded-lg sm:text-xl bg-black/80 backdrop-blur-sm">
                   {selectedVideo.title}
                 </h3>
+                {selectedVideo.category && (
+                  <span className="px-3 py-1 text-xs font-semibold text-red-400 border border-red-500/30 rounded-full w-fit bg-black/80 backdrop-blur-sm sm:text-sm">
+                    {selectedVideo.category}
+                  </span>
+                )}
               </div>
 
               {/* Video Player */}

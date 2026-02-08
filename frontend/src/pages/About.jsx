@@ -42,8 +42,8 @@ export default function About() {
 
     const achievements = [
         { icon: Award, title: "Professional Certified", desc: "Adobe Premiere Pro" },
-        { icon: Users, title: "50+ Happy Clients", desc: "Worldwide" },
-        { icon: Clock, title: "3+ Years", desc: "Experience" }
+        { icon: Users, title: "5000+ Happy Clients", desc: "Worldwide" },
+        { icon: Clock, title: "5+ Years", desc: "Experience" }
     ];
 
     return (

@@ -12,6 +12,10 @@ const videoSchema = new Schema({
     videoLink: {
         type: String,
         required: true
+    },
+    category: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 

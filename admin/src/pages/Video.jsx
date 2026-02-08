@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Plus, Upload, Loader2, Trash2 } from "lucide-react";
 import api from "../config/api";
@@ -7,13 +7,14 @@ export default function Video() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newVideo, setNewVideo] = useState({ title: "" });
+  const [newVideo, setNewVideo] = useState({ title: "", category: "" });
   const [coverImage, setCoverImage] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   // Fetch videos
   const fetchVideos = async () => {
@@ -32,17 +33,28 @@ export default function Video() {
 
   useEffect(() => {
     fetchVideos();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await api.get("/category");
+      setCategories(res.data.categories || []);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   // Handle Add Video
   const handleAddVideo = async (e) => {
     e.preventDefault();
-    if (!newVideo.title || !coverImage || !videoFile) {
+    if (!newVideo.title || !newVideo.category || !coverImage || !videoFile) {
       return alert("Please fill all fields and upload files");
     }
 
     const formData = new FormData();
     formData.append("title", newVideo.title);
+    formData.append("category", newVideo.category);
     formData.append("coverImage", coverImage);
     formData.append("videoLink", videoFile);
 
@@ -59,7 +71,7 @@ export default function Video() {
       if (res.data.success) {
         setVideos((prev) => [...prev, res.data.video]);
         setShowAddModal(false);
-        setNewVideo({ title: "" });
+        setNewVideo({ title: "", category: "" });
         setCoverImage(null);
         setVideoFile(null);
       } else {
@@ -112,8 +124,8 @@ export default function Video() {
   };
 
   const LoadingSkeleton = () => (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-      {[...Array(6)].map((_, i) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {[...Array(8)].map((_, i) => (
         <div key={i} className="overflow-hidden bg-gray-800/50 rounded-xl animate-pulse">
           <div className="aspect-[4/3] bg-gray-700"></div>
           <div className="p-4 space-y-2">
@@ -165,7 +177,7 @@ export default function Video() {
       {/* Video Grid */}
       {!loading && !error && videos.length > 0 && (
         <motion.div
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -210,10 +222,17 @@ export default function Video() {
               </div>
 
               <div className="p-4">
-                <h3 className="text-lg font-semibold truncate transition-colors group-hover:text-red-400">
+                <h3 className="mb-1.5 text-base font-semibold truncate transition-colors group-hover:text-red-400">
                   {video.title}
                 </h3>
-                <p className="text-sm text-gray-400">Click to watch</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-400">Click to watch</p>
+                  {video.category && (
+                    <span className="px-2.5 py-1 text-xs font-semibold text-red-400 border border-red-500/30 rounded-full bg-red-500/10">
+                      {video.category}
+                    </span>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
@@ -239,10 +258,23 @@ export default function Video() {
             >
               <button
                 onClick={() => setSelectedVideo(null)}
-                className="absolute p-2 transition rounded-full top-3 right-3 bg-black/80 hover:bg-red-600"
+                className="absolute z-50 p-2 transition rounded-full top-3 right-3 bg-black/80 hover:bg-red-600"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
+              
+              {/* Video Title and Category */}
+              <div className="absolute z-50 flex flex-col gap-2 top-3 left-3 sm:flex-row sm:items-center">
+                <h3 className="px-3 py-1.5 text-base font-semibold text-white rounded-lg bg-black/80 backdrop-blur-sm">
+                  {selectedVideo.title}
+                </h3>
+                {selectedVideo.category && (
+                  <span className="px-2.5 py-1 text-xs font-semibold text-red-400 border border-red-500/30 rounded-full w-fit bg-black/80 backdrop-blur-sm">
+                    {selectedVideo.category}
+                  </span>
+                )}
+              </div>
+              
               <div className="flex items-center justify-center bg-black">
                 <video
                   key={selectedVideo._id}
@@ -286,10 +318,30 @@ export default function Video() {
                   <input
                     type="text"
                     value={newVideo.title}
-                    onChange={(e) => setNewVideo({ title: e.target.value })}
+                    onChange={(e) =>
+                      setNewVideo((prev) => ({ ...prev, title: e.target.value }))
+                    }
                     className="w-full px-3 py-2 text-sm text-white bg-black border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Enter video title"
                   />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-gray-300">Category</label>
+                  <select
+                    value={newVideo.category}
+                    onChange={(e) =>
+                      setNewVideo((prev) => ({ ...prev, category: e.target.value }))
+                    }
+                    className="w-full px-3 py-2 text-sm text-white bg-black border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  >
+                    <option value="">Select category</option>
+                    {categories.map((cat) => (
+                      <option key={cat._id} value={cat.category}>
+                        {cat.category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>

@@ -18,7 +18,7 @@ export default function Home() {
     };
 
     const [text] = useTypewriter({
-        words: ['Sachin', 'A Video Editor', 'A Content Creator'],
+        words: ['Sachin', 'A Video Editor', 'A Reel Artist','A Content Creator'],
         loop: true,
         typeSpeed: 120,
         deleteSpeed: 80,
@@ -93,7 +93,7 @@ export default function Home() {
                     variants={itemVariants}
                 >
                     <button
-                        onClick={() => scrollToSection("services")}
+                        onClick={() => scrollToSection("work")}
                         className="group px-8 sm:px-10 md:px-16 lg:px-8 py-4 sm:py-5 md:py-8 lg:py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl md:rounded-2xl lg:rounded-xl shadow-lg shadow-red-900/30 hover:shadow-red-600/40 transition-all duration-300 hover:scale-105 outline-none focus:outline-none focus:ring-0 flex items-center justify-center gap-2 md:gap-4 lg:gap-2 text-base md:text-2xl lg:text-base whitespace-nowrap"
                         aria-label="View my work portfolio"
                     >
@@ -116,12 +116,12 @@ export default function Home() {
                     variants={itemVariants}
                 >
                     <div className="text-center">
-                        <div className="text-2xl xl:text-3xl font-bold text-red-500">50+</div>
+                        <div className="text-2xl xl:text-3xl font-bold text-red-500">5000+</div>
                         <div className="text-sm text-gray-400">Projects Completed</div>
                     </div>
                     <div className="w-px h-12 bg-gray-600"></div>
                     <div className="text-center">
-                        <div className="text-2xl xl:text-3xl font-bold text-red-500">3+</div>
+                        <div className="text-2xl xl:text-3xl font-bold text-red-500">5+</div>
                         <div className="text-sm text-gray-400">Years Experience</div>
                     </div>
                     <div className="w-px h-12 bg-gray-600"></div>

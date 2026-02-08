@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
-import VideoCards from '../components/VideoCards';
+import api from "../config/api";
 
 export default function Services() {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await api.get("/services");
+        setServices(res.data || []);
+      } catch (err) {
+        console.error("Error fetching services:", err);
+        setError("Failed to load services.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -25,7 +47,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="min-h-screen px-4 py-20 text-white sm:px-6 md:px-12 lg:px-8 xl:px-16 md:py-32 lg:py-24">
+    <section id="services" className="px-4 py-16 text-white sm:px-6 md:px-12 lg:px-8 xl:px-16 md:py-20 lg:py-16">
       <motion.div
         className="mx-auto max-w-7xl"
         variants={containerVariants}
@@ -48,10 +70,27 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Video Portfolio */}
-        {/* <motion.div variants={itemVariants} className="pb-8 md:pb-16 lg:pb-8">
-          <VideoCards />
-        </motion.div> */}
+        {/* Services List */}
+        <motion.div variants={itemVariants} className="pb-8 md:pb-16 lg:pb-8">
+          {loading && <p className="text-center text-gray-400">Loading services...</p>}
+          {!loading && error && <p className="text-center text-red-400">{error}</p>}
+          {!loading && !error && services.length === 0 && (
+            <p className="text-center text-gray-400">No services found.</p>
+          )}
+          {!loading && !error && services.length > 0 && (
+            <ul className="max-w-3xl space-y-3 text-base sm:text-lg text-left">
+              {services.map((service) => (
+                <li
+                  key={service._id}
+                  className="flex items-start gap-3 text-gray-200"
+                >
+                  <span className="mt-2 inline-block h-2 w-2 rounded-full bg-red-500"></span>
+                  <span>{service.serviceName}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </motion.div>
       </motion.div>
     </section>
   )
