@@ -22,7 +22,7 @@ export default function PrivateRoute({ children }) {
         }
       );
 
-      console.log("PrivateRoute: Auth check response:", response.data);
+      // console.log("PrivateRoute: Auth check response:", response.data);
 
       if (response.data.authenticated) {
         setIsAuthenticated(true);
@@ -42,10 +42,10 @@ export default function PrivateRoute({ children }) {
   // Show loading while checking authentication
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="flex items-center justify-center min-h-screen bg-black">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-red-500/30 border-t-red-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <div className="text-white text-lg">Checking authentication...</div>
+          <div className="w-8 h-8 mx-auto mb-4 border-2 rounded-full border-red-500/30 border-t-red-500 animate-spin"></div>
+          <div className="text-lg text-white">Checking authentication...</div>
         </div>
       </div>
     );
