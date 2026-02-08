@@ -57,7 +57,8 @@ export default function Navbar() {
   const navItems = [
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
-    { id: "services", label: "Work" },
+    { id: "services", label: "Services" },
+    { id: "work", label: "Work" },
     { id: "contact", label: "Contact" },
   ];
 
@@ -93,20 +94,20 @@ export default function Navbar() {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 md:px-12 lg:px-8 py-3 md:py-6 lg:py-4">
+      <div className="flex items-center justify-between px-4 py-3 mx-auto max-w-7xl sm:px-6 md:px-12 lg:px-8 md:py-6 lg:py-4">
         {/* Logo */}
         <button
           onClick={() => handleScrollTo("home")}
-          className="text-xl sm:text-2xl md:text-4xl lg:text-3xl font-bold text-white tracking-wide cursor-pointer hover:scale-105 transition-transform duration-300 outline-none focus:outline-none focus:ring-0 rounded-lg px-2 md:px-4 lg:px-2 py-1 md:py-2 lg:py-1"
+          className="px-2 py-1 text-xl font-bold tracking-wide text-white transition-transform duration-300 rounded-lg outline-none cursor-pointer sm:text-2xl md:text-4xl lg:text-3xl hover:scale-105 focus:outline-none focus:ring-0 md:px-4 lg:px-2 md:py-2 lg:py-1"
           aria-label="Go to home section"
         >
           <span className="text-red-500">S</span>achin
         </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex space-x-6 xl:space-x-8">
+        <ul className="hidden space-x-6 lg:flex xl:space-x-8">
           {navItems.map((item) => (
-            <li key={item.id} className="group relative">
+            <li key={item.id} className="relative group">
               <button
                 onClick={() => handleScrollTo(item.id)}
                 className={`
@@ -137,7 +138,7 @@ export default function Navbar() {
         {/* Mobile Menu Toggle */}
         <button
           onClick={toggleMenu}
-          className="lg:hidden text-white hover:text-red-400 transition-colors p-2 md:p-4 lg:p-2 rounded-lg hover:bg-white/5 outline-none focus:outline-none focus:ring-0 z-50 relative"
+          className="relative z-50 p-2 text-white transition-colors rounded-lg outline-none lg:hidden hover:text-red-400 md:p-4 lg:p-2 hover:bg-white/5 focus:outline-none focus:ring-0"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
@@ -157,7 +158,7 @@ export default function Navbar() {
         role="menu"
         aria-hidden={!menuOpen}
       >
-        <ul className="flex flex-col items-center space-y-1 md:space-y-2 lg:space-y-1 py-4 md:py-8 lg:py-4 px-4 md:px-8 lg:px-4">
+        <ul className="flex flex-col items-center px-4 py-4 space-y-1 md:space-y-2 lg:space-y-1 md:py-8 lg:py-4 md:px-8 lg:px-4">
           {navItems.map((item) => (
             <li key={item.id} className="w-full">
               <button

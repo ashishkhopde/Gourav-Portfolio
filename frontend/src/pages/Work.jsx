@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import VideoCards from '../components/VideoCards';
 
-export default function Services() {
+export default function Work() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -25,7 +25,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="min-h-screen px-4 py-20 text-white sm:px-6 md:px-12 lg:px-8 xl:px-16 md:py-32 lg:py-24">
+    <section id="work" className="min-h-screen px-4 py-20 text-white sm:px-6 md:px-12 lg:px-8 xl:px-16 md:py-32 lg:py-24">
       <motion.div
         className="mx-auto max-w-7xl"
         variants={containerVariants}
@@ -37,21 +37,17 @@ export default function Services() {
         <motion.div variants={itemVariants} className="mb-16 text-center lg:text-left md:mb-24 lg:mb-20">
           <h3 className="flex items-center justify-center gap-2 mb-4 text-sm font-medium tracking-wide text-red-400 uppercase sm:text-base md:text-xl lg:text-base lg:justify-start md:mb-6 lg:mb-4">
             <Play className="w-5 h-5 md:w-7 md:h-7 lg:w-5 lg:h-5 fill-red-500 stroke-none" />
-            My Services
+            My Work
           </h3>
           <h2 className="mb-6 text-3xl font-bold leading-tight sm:text-4xl md:text-7xl lg:text-5xl xl:text-6xl md:mb-10 lg:mb-6">
-            What Can I Do
+            Projects I Work With
           </h2>
-          <p className="max-w-3xl mx-auto text-base leading-relaxed text-gray-400 sm:text-lg md:text-2xl lg:text-xl lg:mx-0">
-            Explore my portfolio of video editing projects, from promotional content to creative storytelling. 
-            Each project showcases my passion for visual excellence and attention to detail.
-          </p>
         </motion.div>
 
         {/* Video Portfolio */}
-        {/* <motion.div variants={itemVariants} className="pb-8 md:pb-16 lg:pb-8">
+        <motion.div variants={itemVariants} className="pb-8 md:pb-16 lg:pb-8">
           <VideoCards />
-        </motion.div> */}
+        </motion.div>
       </motion.div>
     </section>
   )

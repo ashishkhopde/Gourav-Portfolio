@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Contact from './pages/Contact.jsx';
+import Work from './pages/Work.jsx';
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
         <Home />
         <About />
         <Services />
+        <Work />
         <Contact />
       </main>
 
