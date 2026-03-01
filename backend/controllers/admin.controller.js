@@ -31,12 +31,14 @@ export const adminLogin = (req, res) => {
 
         // Set cookie with proper configuration for production and local development
         const isProduction = process.env.NODE_ENV === 'production';
+        const cookieDomain = process.env.COOKIE_DOMAIN;
         res.cookie("token", token, {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
             maxAge: 24 * 60 * 60 * 1000, // 1 day
-            path: '/'
+            path: '/',
+            ...(cookieDomain ? { domain: cookieDomain } : {})
         });
 
         console.log("Cookie set successfully");
@@ -56,7 +58,9 @@ export const adminLogin = (req, res) => {
 // New endpoint to check authentication status
 export const checkAuth = (req, res) => {
     try {
-        const token = req.cookies.token;
+        const header = req.headers.authorization || "";
+        const bearerToken = header.startsWith("Bearer ") ? header.slice(7) : null;
+        const token = bearerToken || req.cookies.token;
         console.log("=== AUTH CHECK ===");
         console.log("Token exists:", !!token);
         // console.log("All cookies:", req.cookies);
@@ -93,11 +97,13 @@ export const checkAuth = (req, res) => {
 export const adminLogout = (req, res) => {
     try {
         const isProduction = process.env.NODE_ENV === 'production';
+        const cookieDomain = process.env.COOKIE_DOMAIN;
         res.clearCookie("token", {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
-            path: '/'
+            path: '/',
+            ...(cookieDomain ? { domain: cookieDomain } : {})
         });
 
         return res.status(200).json({

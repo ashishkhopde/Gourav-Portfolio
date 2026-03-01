@@ -12,10 +12,19 @@ import servicesRoute from "./routes/services.route.js";
 
 const app = express();
 
-app.use(cors({
-  origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL, "https://sachin-editor-portfolio.vercel.app", "https://sachin-portfolio-admin.vercel.app", "http://localhost:5174", "http://localhost:5173", "http://localhost:3000", "http://localhost:4173"],
-  credentials: true
-}));
+const envOrigins = [process.env.FRONTEND_URL, process.env.ADMIN_URL].filter(Boolean);
+const extraOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+const allowedOrigins = [...new Set([...envOrigins, ...extraOrigins])];
+
+app.use(
+  cors({
+    origin: allowedOrigins.length > 0 ? allowedOrigins : undefined,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

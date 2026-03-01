@@ -56,7 +56,10 @@ export default function LogIn() {
       console.log("Login response:", res.data);
 
       if (res.data.success) {
-        console.log("Login successful, verifying authentication...");
+        if (res.data.token) {
+          localStorage.setItem("adminToken", res.data.token);
+        }
+        // console.log("Login successful, verifying authentication...");
 
         // Verify authentication before redirecting
         try {
@@ -97,21 +100,21 @@ export default function LogIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-6">
+    <div className="flex items-center justify-center min-h-screen px-6 bg-black">
       <div className="w-full max-w-md bg-[#111] rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center text-red-500 mb-6">
+        <h1 className="mb-6 text-3xl font-bold text-center text-red-500">
           Admin Login
         </h1>
 
         {error && (
-          <div className="text-center text-red-400 mb-4 font-medium bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+          <div className="p-3 mb-4 font-medium text-center text-red-400 border rounded-lg bg-red-500/10 border-red-500/30">
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-gray-300 mb-2 font-medium">
+            <label className="block mb-2 font-medium text-gray-300">
               Username
             </label>
             <input
@@ -119,13 +122,13 @@ export default function LogIn() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
-              className="w-full px-4 py-3 rounded-lg bg-black border border-red-500 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-4 py-3 text-white bg-black border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 font-medium">
+            <label className="block mb-2 font-medium text-gray-300">
               Password
             </label>
             <input
@@ -133,7 +136,7 @@ export default function LogIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
-              className="w-full px-4 py-3 rounded-lg bg-black border border-red-500 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-4 py-3 text-white bg-black border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               disabled={isLoading}
             />
           </div>
@@ -141,11 +144,11 @@ export default function LogIn() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-700 disabled:cursor-not-allowed text-white py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+            className="flex items-center justify-center w-full gap-2 py-3 font-semibold text-white transition-all duration-300 bg-red-500 rounded-lg shadow-lg hover:bg-red-600 disabled:bg-red-700 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 rounded-full border-white/30 border-t-white animate-spin"></div>
                 Logging in...
               </>
             ) : (

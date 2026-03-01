@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart, ArrowUp } from "lucide-react";
+import { Heart, ArrowUp, Youtube, Instagram } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -11,6 +11,12 @@ export default function Footer() {
   };
 
   const currentYear = new Date().getFullYear();
+  const youtubeUrl = import.meta.env.VITE_YOUTUBE_URL;
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL;
+  const socialLinks = [
+    { name: "YouTube", url: youtubeUrl, Icon: Youtube },
+    { name: "Instagram", url: instagramUrl, Icon: Instagram },
+  ].filter((link) => link.url);
 
   return (
     <footer className="bg-gradient-to-t from-black via-[#0a0000] to-black border-t border-red-500/20 text-white py-8 md:py-16 lg:py-12">
@@ -47,6 +53,30 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           />
+
+          {/* Socials */}
+          {socialLinks.length > 0 && (
+            <motion.div
+              className="flex items-center justify-center gap-4 md:gap-6 lg:gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              viewport={{ once: true }}
+            >
+              {socialLinks.map(({ name, url, Icon }) => (
+                <a
+                  key={name}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={name}
+                  className="p-3 md:p-4 lg:p-3 rounded-full border border-red-500/30 bg-red-500/5 hover:bg-red-500/15 hover:border-red-500/60 transition-all duration-300 hover:scale-110"
+                >
+                  <Icon className="w-5 h-5 md:w-7 md:h-7 lg:w-5 lg:h-5 text-red-400 hover:text-red-300 transition-colors" />
+                </a>
+              ))}
+            </motion.div>
+          )}
 
           {/* Copyright */}
           <motion.div

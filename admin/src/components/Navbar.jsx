@@ -21,6 +21,8 @@ export default function Navbar() {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
+      localStorage.removeItem("adminToken");
+      delete api.defaults.headers.common.Authorization;
       navigate("/login", { replace: true });
     }
   };
